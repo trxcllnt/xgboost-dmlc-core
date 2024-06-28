@@ -44,8 +44,17 @@ if (NOT GTEST_FOUND)
   # Add googletest directly to our build. This adds
   # the following targets: gtest, gtest_main, gmock
   # and gmock_main
+  set(PREV_INSTALL_GTEST ${INSTALL_GTEST})
+  set(PREV_BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS})
+  set(PREV_CMAKE_POSITION_INDEPENDENT_CODE ${CMAKE_POSITION_INDEPENDENT_CODE})
+  set(INSTALL_GTEST OFF)
+  set(BUILD_SHARED_LIBS OFF)
+  set(CMAKE_POSITION_INDEPENDENT_CODE ON)
   add_subdirectory("${CMAKE_BINARY_DIR}/googletest-src"
     "${CMAKE_BINARY_DIR}/googletest-build")
+  set(INSTALL_GTEST ${PREV_INSTALL_GTEST})
+  set(BUILD_SHARED_LIBS ${PREV_BUILD_SHARED_LIBS})
+  set(CMAKE_POSITION_INDEPENDENT_CODE ${PREV_CMAKE_POSITION_INDEPENDENT_CODE})
 
   target_compile_definitions(gtest PRIVATE ${ENABLE_GNU_EXTENSION_FLAGS})
   target_compile_definitions(gmock PRIVATE ${ENABLE_GNU_EXTENSION_FLAGS})
